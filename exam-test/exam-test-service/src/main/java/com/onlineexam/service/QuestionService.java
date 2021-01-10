@@ -1,5 +1,6 @@
 package com.onlineexam.service;
 
+import com.onlineexam.mapper.UserQQuestionMapper;
 import com.onlineexam.pojo.Question;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,6 +32,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private UserQQuestionMapper userQQuestionMapper;
 
     @Autowired
     private SubjectClient subjectClient;
@@ -65,6 +69,9 @@ public class QuestionService {
         questionMapper.updateByPrimaryKeySelective(question);
     }
 
+    public int canUpdateQuestion(Long questionId){
+        return userQQuestionMapper.getUserQQuestionsByQuesId(questionId).size();
+    }
     /**
      * 通过id查询
      *
@@ -85,8 +92,8 @@ public class QuestionService {
      */
     public List<Question> findAll() {
         List<Question> list = questionMapper.selectAll();
-        if(!CollectionUtils.isEmpty(list)){
-            for (Question question : list){
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Question question : list) {
                 ResultBean<Subject> res = subjectClient.findSubjectById(question.getFkQuestionSubjectId());
                 question.setFkSubject(res.getData());
             }
@@ -146,7 +153,7 @@ public class QuestionService {
         String contentType = file.getContentType();
 
         //只能是xlsx文件
-        if(!contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
+        if (!contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
             throw new ExamException(ExamExceptionEnum.UPLOAD_EXCEL_FILE);
         }
 
@@ -159,9 +166,9 @@ public class QuestionService {
         XSSFSheet sheet = xwb.getSheetAt(0);
 
         int lastRowNum = sheet.getLastRowNum();
-        for(int i =2; i <= lastRowNum; i++){
+        for (int i = 2; i <= lastRowNum; i++) {
             XSSFRow row = sheet.getRow(i);
-            if(row != null){
+            if (row != null) {
                 //获取每一行
                 XSSFCell titleCell = row.getCell(0);
                 String title = titleCell.getStringCellValue();
@@ -181,7 +188,7 @@ public class QuestionService {
                 //构建试题
                 Question question = new Question();
 
-                if(type == 0.0 || type == 1.0){ //单选或多选
+                if (type == 0.0 || type == 1.0) { //单选或多选
                     XSSFCell selectACell = row.getCell(2);
                     String selectA = selectACell.getStringCellValue();
                     question.setQuestionSelectA(selectA);
@@ -197,7 +204,7 @@ public class QuestionService {
                     XSSFCell selectDCell = row.getCell(5);
                     String selectD = selectDCell.getStringCellValue();
                     question.setQuestionSelectD(selectD);
-                }else if(type == 2.0){  //判断
+                } else if (type == 2.0) {  //判断
 
                 }
 

@@ -3,28 +3,9 @@ server:
 spring:
   application:
     name: exam-school-service
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/online_exam?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 1
-    hikari:
-      max-lifetime: 28830000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
-      maximum-pool-size: 9 # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
-eureka:
-  client:
-    registry-fetch-interval-seconds: 5 #拉取服务的间隔时间5秒
-    service-url:
-      defaultZone: http://localhost:10010/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 5 # 5秒钟发送一次心跳
-    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
-onlineexam:
-  jwt:
-    secret: onlineexam@Login(Auth}*^31)&heiMa% # 登录校验的密钥
-    pubKeyPath: ./jwt/rsa.pub
-    priKeyPath: ./jwt/rsa.pri
-    expire: 30 # 过期时间,单位分钟
-    cookieName: TOKEN
+  profiles:
+    active: dev
+
 mybatis:
   type-aliases-package: com.onlineexam.pojo
   configuration:

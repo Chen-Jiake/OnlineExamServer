@@ -63,7 +63,7 @@ public class GradeController {
             return new ResultBean(600, "修改失败，班级已存在！", null);
         }
         gradeService.updateGrade(grade);
-        return new ResultBean(201, "id为["+grade.getGradeId()+"]的班级修改成功！", null);
+        return new ResultBean(201, "修改成功！", null);
     }
 
     /**

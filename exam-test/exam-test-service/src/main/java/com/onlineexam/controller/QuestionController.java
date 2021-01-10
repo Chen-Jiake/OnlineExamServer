@@ -42,10 +42,10 @@ public class QuestionController {
     public ResultBean<Void> delQuestionById(@RequestParam("questionId") Long questionId) {
         try {
             questionService.delQuestionById(questionId);
-            return new ResultBean(204, "id为["+questionId+"]的试题删除成功！", null);
+            return new ResultBean(204, "试题删除成功！", null);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultBean(600, "删除失败，该试题可能被其它因素引用到！", null);
+            return new ResultBean(600, "删除失败，该该题存在试卷中！", null);
         }
     }
 
@@ -59,7 +59,7 @@ public class QuestionController {
     public ResultBean<Void> updateQuestion(@RequestBody Question question) {
         System.out.println(question);
         questionService.updateQuestion(question);
-        return new ResultBean(201, "id为["+question.getQuestionId()+"]的试题修改成功！", null);
+        return new ResultBean(201, "修改成功！", null);
     }
 
     /**
@@ -75,6 +75,17 @@ public class QuestionController {
             return new ResultBean(600, "试题不存在！", null);
         }
         return new ResultBean(200, "查询成功！", question);
+    }
+
+    @GetMapping("canUpdateQuestion")
+    public ResultBean<Void> canUpdateQuestion(@RequestParam("questionId") Long questionId) {
+        int len = questionService.canUpdateQuestion(questionId);
+        if (len > 0) {
+            return new ResultBean(600, "该题已有考生作答，无法修改！", null);
+        }
+        else{
+            return new ResultBean(204, "OK！", null);
+        }
     }
 
     /**

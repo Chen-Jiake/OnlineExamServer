@@ -9,7 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>exam-eureka</module>
-        <module>exam-zuul</module>
+        <module>exam-gateway</module>
         <module>exam-user</module>
         <module>exam-auth</module>
         <module>exam-school</module>

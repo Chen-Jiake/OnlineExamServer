@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.onlineexam.zuul</groupId>
-    <artifactId>exam-zuul</artifactId>
+    <groupId>com.onlineexam.gateway</groupId>
+    <artifactId>exam-gateway</artifactId>
 
     <dependencies>
         <dependency>

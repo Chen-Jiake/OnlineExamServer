@@ -10,9 +10,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableFeignClients
-public class ExamZuulApplication {
+public class ExamGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ExamZuulApplication.class, args);
+        SpringApplication.run(ExamGatewayApplication.class, args);
     }
 }

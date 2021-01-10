@@ -1,0 +1,30 @@
+server:
+  port: 10011
+spring:
+  application:
+    name: exam-gateway
+  profiles:
+    active: dev
+
+zuul:
+  prefix: /api
+  routes:
+    exam-auth-service: /auth/**
+    exam-user-service: /user/**
+    exam-school-service: /school/**
+    exam-test-service: /test/**
+  add-host-header: true # 转到微服务时携带域名
+  sensitive-headers: # 覆盖默认敏感头信息，不忽略Cookie Set-Cookie Authorization请求头信息
+  host:
+    connect-timeout-millis: 15000
+    socket-timeout-millis: 10000
+feign:
+  client:
+    config:
+     default:
+       readTimeout: 10000
+       connectTimeout: 10000
+
+ribbon:
+  ConnectTimeout: 10000 # ribbon链接超时时长
+  ReadTimeout: 10000 # ribbon读取超时时间长

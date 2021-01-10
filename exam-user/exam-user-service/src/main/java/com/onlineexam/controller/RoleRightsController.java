@@ -49,6 +49,6 @@ public class RoleRightsController {
     @PutMapping("updateRights")
     public ResultBean<Void> updateRights(@RequestParam("fkRoleId") Long fkRoleId, @RequestParam("rightsList") List<Long> rightsList){
         roleRightsService.updateRights(fkRoleId, rightsList);
-        return new ResultBean<>(201, "角色["+roleService.findRoleById(fkRoleId).getRoleName()+"]的权限修改成功！", null);
+        return new ResultBean<>(201, "修改成功！", null);
     }
 }

@@ -63,7 +63,7 @@ public class SubjectController {
             return new ResultBean(600, "修改失败，用户已存在！", null);
         }
         subjectService.updateSubject(subject);
-        return new ResultBean(201, "id为["+subject.getSubjectId()+"]的科目修改成功！", null);
+        return new ResultBean(201, "修改成功！", null);
     }
 
     /**

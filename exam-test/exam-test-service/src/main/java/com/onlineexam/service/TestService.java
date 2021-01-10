@@ -1,5 +1,7 @@
 package com.onlineexam.service;
 
+import com.onlineexam.mapper.TestUserQMapper;
+import com.onlineexam.mapper.UserQQuestionMapper;
 import com.onlineexam.pojo.Test;
 import com.onlineexam.pojo.TestQuestion;
 import com.onlineexam.pojo.TestUserQ;
@@ -45,6 +47,12 @@ public class TestService {
 
     @Autowired
     private TestQuestionMapper testQuestionMapper;
+
+    @Autowired
+    private TestUserQMapper testUserQMapper;
+
+    @Autowired
+    private UserQQuestionMapper userQQuestionMapper;
 
     @Autowired
     private TestUserQService testUserQService;
@@ -317,6 +325,9 @@ public class TestService {
      * @param testId
      */
     public void delTestById(Long testId) {
+        testQuestionMapper.DeleteTestUserListByPid(testId);
+        testUserQMapper.DeleteTestUserQByPid(testId);
+        userQQuestionMapper.DeleteUserQQuestionByPid(testId);
         testMapper.deleteByPrimaryKey(testId);
     }
 
@@ -325,10 +336,23 @@ public class TestService {
      *
      * @param test
      */
+//    public void updateTest(Test test) {
+//        //数据库只会更新非null字段
+//        test.setTestAddtime(null);
+//        testMapper.updateByPrimaryKeySelective(test);
+//    }
+
     public void updateTest(Test test) {
         //数据库只会更新非null字段
         test.setTestAddtime(null);
         testMapper.updateByPrimaryKeySelective(test);
+    }
+
+    public int canTestUpdate(Long testId) {
+//        return 1;
+//        System.out.print(testUserQMapper.getTestUserQsByTestId(testId).size());
+        return testUserQMapper.getTestUserQsByTestId(testId).size();
+
     }
 
     /**

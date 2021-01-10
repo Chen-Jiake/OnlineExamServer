@@ -56,6 +56,17 @@ public class TestController {
         return new ResultBean(201, "修改成功！", null);
     }
 
+    @GetMapping("canTestUpdate")
+    public ResultBean<Void> canTestUpdate(@RequestParam("testId") Long testId) {
+        int len = testService.canTestUpdate(testId);
+        if (len > 0) {
+            return new ResultBean(600, "有考生已参加该考试,无法修改！", null);
+        }
+        else{
+            return new ResultBean(204, "OK！", null);
+        }
+    }
+
     /**
      * 通过id查询
      *
